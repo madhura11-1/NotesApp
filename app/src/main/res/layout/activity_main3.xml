@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Main3Activity"
+    android:orientation="vertical"
+    android:background="@drawable/ic_wood">
+
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="LOGIN"
+        android:background="#AC7736"/>
+
+    <ImageView
+        android:layout_width="232dp"
+        android:layout_height="154dp"
+        android:src="@drawable/notespro"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginBottom="20dp"/>
+    <LinearLayout
+        android:layout_margin="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/user"
+            android:layout_margin="19dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="ENTER Email address"
+            android:background="@drawable/border_styling"
+            android:inputType="textEmailAddress"
+            android:layout_gravity="center"
+            android:fontFamily="@font/diff_font"
+            android:textStyle="bold"
+            android:padding="20sp"
+            android:textColorHint="#000000"
+             />
+        <EditText
+            android:id="@+id/password"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:background="@drawable/border_styling"
+            android:fontFamily="@font/diff_font"
+            android:textStyle="bold"
+            android:padding="20sp"
+            android:textColorHint="#000000"
+            android:inputType="textPassword"/>
+
+        </LinearLayout>
+
+    <Button
+        android:id="@+id/Button_ready_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_style"
+        android:fontFamily="@font/diff_font"
+        android:padding="20dp"
+        android:text="READY FOR GO NOTES"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/progress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"/>
+
+
+
+</LinearLayout>
