@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Main2Activity extends AppCompatActivity {
@@ -30,6 +31,8 @@ public class Main2Activity extends AppCompatActivity {
     private String emailrr,passrr;
     Button b3;
     private ProgressBar p;
+    FirebaseFirestore fb=FirebaseFirestore.getInstance();
+    CollectionReference cd = fb.collection("NOTES");
 
 
     @Override
@@ -38,6 +41,7 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         mAuth = FirebaseAuth.getInstance();
+
         e1 = findViewById(R.id.user_1);
         e2 = findViewById(R.id.emial_1);
         e3 = findViewById(R.id.pass_1);
@@ -77,6 +81,8 @@ public class Main2Activity extends AppCompatActivity {
                                 if (task.isSuccessful())
                                 {  Toast.makeText(Main2Activity.this, "SUCCESSFULLY COMPLTED", Toast.LENGTH_SHORT).show();
                                    p.setVisibility(View.GONE);
+                                   info infi =new info("");
+                                   cd.document(mAuth.getUid()).set(infi);
                                 }
                                 else {
                                     Toast.makeText(Main2Activity.this, "NOT DONE", Toast.LENGTH_SHORT).show();

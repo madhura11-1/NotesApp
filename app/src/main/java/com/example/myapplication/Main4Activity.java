@@ -31,7 +31,7 @@ public class Main4Activity extends AppCompatActivity {
     private EditText noty;
     private Button bn;
     private static final String S="NOTES";
-    static int flag=0;
+    int flag=0;
     FirebaseAuth authr;
     FirebaseFirestore fb = FirebaseFirestore.getInstance();
     CollectionReference cd = fb.collection("NOTES");
@@ -56,90 +56,56 @@ public class Main4Activity extends AppCompatActivity {
                     noty.requestFocus();
                     return ;
                 }
+                FirebaseUser user = authr.getCurrentUser();
+                 if(user!=null) {
+                     cd.document(user.getUid()).update("notes", s).addOnSuccessListener(new OnSuccessListener<Void>() {
+                         @Override
+                         public void onSuccess(Void aVoid) {
+                             Toast.makeText(Main4Activity.this, "DONE", Toast.LENGTH_SHORT).show();
+                         }
+                     })
+                             .addOnFailureListener(new OnFailureListener() {
+                                 @Override
+                                 public void onFailure(@NonNull Exception e) {
+                                     Toast.makeText(Main4Activity.this, "NOT DONE", Toast.LENGTH_SHORT).show();
+                                 }
+                             });
 
-                   cd.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
-                               @Override
-                               public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                   if (e != null) {
-                                       return;
-                                   }
-                                   FirebaseUser user = authr.getCurrentUser();
-                                   String sn = noty.getText().toString().trim();
-                                   if (user != null) {
-                                       String uid = user.getUid();
-                                       for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                                           info ins = documentSnapshot.toObject(info.class);
-                                           if (ins.getId().equals(uid)) {
+                 }
+}
+    });
+}
 
-                                               cd.document(ins.getId()).update(ins.notes, sn);
-                                               flag = 1;
-                                           }
-                                       }
-                                       if (flag == 0) {
-                                           info in = new info(sn);
-                                           in.setId(uid);
-                                           cd.add(in).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                               @Override
-                                               public void onSuccess(DocumentReference documentReference) {
-                                                   Toast.makeText(Main4Activity.this, "NOTE SAVED", Toast.LENGTH_SHORT).show();
-                                               }
-                                           })
-                                                   .addOnFailureListener(new OnFailureListener() {
-                                                       @Override
-                                                       public void onFailure(@NonNull Exception e) {
-                                                           Toast.makeText(Main4Activity.this, "ERROR OCCURED", Toast.LENGTH_SHORT).show();
-                                                       }
-                                                   });
-                                       }
-                                   }
-
-
-                               }
-
-                               ;
-                           });
-
-
-
-
-
-
-
-
-
-
-
-
-   /* @Override
+    @Override
     protected void onStart() {
         super.onStart();
-        cd.addSnapshotListener(this, new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    return;
-                }
-                FirebaseUser users = authr.getCurrentUser();
-                String datas = "";
-                String did = "";
-                if (users != null) {
-                    did = users.getUid();
 
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        info ins = documentSnapshot.toObject(info.class);
-                        if (ins.getId().equals(did)) {
-                            datas = ins.getNotes();
-                        }
-                    }
-                    noty.setText(datas);
-                }
-            }
-        });
-    }*/
+        FirebaseUser use = authr.getCurrentUser();
+        if(use!=null)
+        {
+
+           cd.addSnapshotListener(new EventListener<QuerySnapshot>() {
+               @Override
+               public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                   if(e!=null)
+                       return ;
+                   FirebaseUser user =authr.getCurrentUser();
+                   String data="";
+                   for(QueryDocumentSnapshot documentSnapshot:queryDocumentSnapshots)
+                   {
+                       info ins = documentSnapshot.toObject(info.class);
+                       if(user.getUid().equals(documentSnapshot.getId()))
+                       {
+                           data = ins.getNotes();
+                           break;
+                       }
+                   }
+                   noty.setText(data);
+               }
+           });
 
 
+        }
 
-
-}
     }
 }
